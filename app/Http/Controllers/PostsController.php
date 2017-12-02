@@ -56,7 +56,7 @@ class PostsController extends Controller
         auth()->user()->posts()->create($post);
 
         return redirect()
-            ->route('posts.index')
+            ->route('posts.index', ['myposts' => 1])
             ->with('status', 'Post Created.');
     }
 
@@ -116,6 +116,10 @@ class PostsController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+
+        return redirect()
+            ->route('posts.index', ['myposts' => 1])
+            ->with('status', 'Post Deleted');
     }
 }

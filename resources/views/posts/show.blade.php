@@ -19,10 +19,17 @@
                     	</em>
                     </p>
                     @can('update', $post)
-                        <div class="text-right clear-fix">
-                            <a class="btn btn-sm btn-primary" href="{{ route('posts.edit', $post) }}">Edit</a>
-                        </div>
+                            <a class="btn btn-sm btn-primary" href="{{ route('posts.edit', $post) }}">Edit</a> 
                     @endcan
+                    @can('delete', $post)
+                    		<form style="display:inline" method="POST" action="{{ route('posts.destroy', $post) }}">
+                    			{{ csrf_field() }}
+                    			{{ method_field('DELETE') }}
+                            	<button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                            </form>
+
+                    @endcan
+
                 </div>
                 <div class="panel-body">
                 	<p>

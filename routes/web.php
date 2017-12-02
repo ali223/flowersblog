@@ -19,7 +19,7 @@ Route::post('/posts', 'PostsController@store')->name('posts.store');
 Route::patch('/posts/{post}', 'PostsController@update')->name('posts.update');
 Route::get('/posts/{post}/edit', 'PostsController@edit')->name('posts.edit');
 Route::get('/posts/{post}', 'PostsController@show')->name('posts.show');
-
+Route::delete('/posts/{post}', 'PostsController@destroy')->name('posts.destroy');
 
 Route::post('/posts/{post}/comments', 'CommentsController@store')->name('comments.store');
 
