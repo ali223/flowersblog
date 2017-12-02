@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class PostsController extends Controller
 {
+    public function __construct()
+    {
+        //$this->middleware('auth', ['only' => ['create', 'store']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +19,7 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('user')->get();        
+        $posts = Post::with('user')->latest()->get();        
 
         return view('posts.index', compact('posts'));
     }
@@ -25,8 +30,8 @@ class PostsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        //
+    {        
+        return view('posts.create');
     }
 
     /**
@@ -37,7 +42,16 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $post = $request->validate([
+            'title' => 'required',
+            'content' => 'required'
+        ]);        
+
+        auth()->user()->posts()->create($post);
+
+        return redirect()
+            ->route('posts.index')
+            ->with('status', 'Post Created.');
     }
 
     /**

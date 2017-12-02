@@ -20,6 +20,9 @@
             <!-- Left Side Of Navbar -->
             <ul class="nav navbar-nav">
                 <li><a href="{{ route('posts.index') }}">All Posts</a></li>
+                @auth                    
+                    <li><a href="{{ route('posts.create') }}">Create Post</a></li>
+                @endauth
             </ul>
 
             <!-- Right Side Of Navbar -->

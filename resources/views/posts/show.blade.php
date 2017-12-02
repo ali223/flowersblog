@@ -28,7 +28,7 @@
             		<h4>Comments</h4>
             	</div>
             	<div class="panel-body">
-            		@foreach($post->comments as $comment)
+                    @forelse($post->comments as $comment)
             			<p>
 	        		        <strong>
 	        					{{ $comment->user->name }} 
@@ -41,7 +41,9 @@
             			<p>
             				{{ $comment->text }}
             			</p>
-            		@endforeach            		
+                    @empty
+                        <p>No Comments posted yet.</p>
+                    @endforelse
             	</div>
             </div>
             @can('create', [App\Comment::class, $post])
@@ -51,13 +53,9 @@
                     </div>
                     <div class="panel-body">
                         <form method="POST" action="{{ route('comments.store', $post) }}">
+                            {{ csrf_field() }}
                             <div class="form-group">
-                                {{ csrf_field() }}
-                                <textarea 
-                                    id="text" 
-                                    name="text" 
-                                    class="form-control">{{ old('text') }}                          
-                                </textarea>
+                                <textarea id="text" name="text" class="form-control" required>{{ old('text') }}</textarea>
                             </div>  
                             <div class="form-group">
                                 <button type="submit" class="btn btn-success">Save</button>
