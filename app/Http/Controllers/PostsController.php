@@ -17,9 +17,15 @@ class PostsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::with('user')->latest()->get();        
+        $posts = Post::with('user')->latest();
+
+        if (auth()->check() && $request->myposts) {
+            $posts->where('user_id', auth()->id());
+        }
+
+        $posts = $posts->get();
 
         return view('posts.index', compact('posts'));
     }
