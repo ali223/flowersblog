@@ -11,11 +11,18 @@
                 	<h4>
                 		{{ $post->title }}
                 	</h4>             	
-                	<strong>Created by: </strong>
-                	{{ $post->user->name }} on 
-                	<em>
-                		{{ $post->created_at->toDayDateTimeString() }}
-                	</em>
+                    <p>
+                    	<strong>Created by: </strong>
+                    	{{ $post->user->name }} on 
+                    	<em>
+                    		{{ $post->created_at->toDayDateTimeString() }}
+                    	</em>
+                    </p>
+                    @can('update', $post)
+                        <div class="text-right clear-fix">
+                            <a class="btn btn-sm btn-primary" href="{{ route('posts.edit', $post) }}">Edit</a>
+                        </div>
+                    @endcan
                 </div>
                 <div class="panel-body">
                 	<p>

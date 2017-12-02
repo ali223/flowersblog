@@ -9,7 +9,7 @@ class PostsController extends Controller
 {
     public function __construct()
     {
-        //$this->middleware('auth', ['only' => ['create', 'store']]);
+        $this->middleware('auth', ['except' => ['index', 'show']]);
     }
 
     /**
@@ -80,7 +80,9 @@ class PostsController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        $this->authorize('update', $post);        
+
+        return view('posts.edit', compact('post'));
     }
 
     /**
@@ -92,7 +94,18 @@ class PostsController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $this->authorize('update', $post);
+
+        $updatedPost = $request->validate([
+            'title' => 'required',
+            'content' => 'required'
+        ]);        
+
+        $post->update($updatedPost);
+
+        return redirect()
+            ->route('posts.show', $post)
+            ->with('status', 'Post Updated.');
     }
 
     /**
