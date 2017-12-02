@@ -4,6 +4,8 @@
 <div class="container">
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
+            @include('layouts.errors')
+            @include('layouts.status')
             <div class="panel panel-success">
                 <div class="panel-heading">
                 	<h4>
@@ -37,12 +39,33 @@
 	        				</strong>
         				</p>
             			<p>
-            				{{ $comment->content }}
+            				{{ $comment->text }}
             			</p>
             		@endforeach            		
             	</div>
-
             </div>
+            @can('create', [App\Comment::class, $post])
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        Add Comment
+                    </div>
+                    <div class="panel-body">
+                        <form method="POST" action="{{ route('comments.store', $post) }}">
+                            <div class="form-group">
+                                {{ csrf_field() }}
+                                <textarea 
+                                    id="text" 
+                                    name="text" 
+                                    class="form-control">{{ old('text') }}                          
+                                </textarea>
+                            </div>  
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-success">Save</button>
+                            </div>
+                        </form>
+                    </div>                
+                </div>
+            @endcan
         </div>
     </div>
 </div>

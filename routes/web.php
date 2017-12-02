@@ -15,6 +15,8 @@ Route::get('/', 'PostsController@index');
 Route::get('/posts', 'PostsController@index')->name('posts.index');
 Route::get('/posts/{post}', 'PostsController@show')->name('posts.show');
 
+Route::post('/posts/{post}/comments', 'CommentsController@store')->name('comments.store');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
