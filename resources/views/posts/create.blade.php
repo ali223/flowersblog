@@ -15,7 +15,8 @@
                             {{ csrf_field() }}
                             <div class="form-group">
                                 <label for="title">Title:</label>
-                                <input type="text" id="title" name="title" class="form-control" value="{{ old('title') }}" required>
+                                <input type="text" id="title" name="title" class="form-control" value="{{ old('title') }}" 
+                                maxlength="180" required>
                             </div>                              
                             <div class="form-group">
                                 <label for="content">Content:</label>

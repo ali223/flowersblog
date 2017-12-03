@@ -49,7 +49,7 @@ class PostsController extends Controller
     public function store(Request $request)
     {
         $post = $request->validate([
-            'title' => 'required',
+            'title' => 'required|max:180',
             'content' => 'required'
         ]);        
 
@@ -97,7 +97,7 @@ class PostsController extends Controller
         $this->authorize('update', $post);
 
         $updatedPost = $request->validate([
-            'title' => 'required',
+            'title' => 'required|max:180',
             'content' => 'required'
         ]);        
 

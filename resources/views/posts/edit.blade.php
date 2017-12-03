@@ -16,7 +16,7 @@
                             {{ method_field('PATCH') }}
                             <div class="form-group">
                                 <label for="title">Title:</label>
-                                <input type="text" id="title" name="title" class="form-control" value="{{ old('title', $post->title) }}" required>
+                                <input type="text" id="title" name="title" class="form-control" value="{{ old('title', $post->title) }}" maxlength="180" required>
                             </div>                              
                             <div class="form-group">
                                 <label for="content">Content:</label>
