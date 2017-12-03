@@ -21,13 +21,19 @@ class PostsController extends Controller
     {
         $posts = Post::with('user')->latest();
 
+        $showMyPosts = 0;
+
         if (auth()->check() && $request->myposts) {
             $posts->where('user_id', auth()->id());
+            $showMyPosts = 1;
         }
 
         $posts = $posts->get();
 
-        return view('posts.index', compact('posts'));
+        return view('posts.index', [
+                'posts' => $posts,
+                'showMyPosts' => $showMyPosts
+            ]);
     }
 
     /**

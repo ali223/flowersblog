@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             @include('layouts.status')
-	        @foreach($posts as $post)
+	        @forelse($posts as $post)
 	            <div class="panel panel-default">
 	                <div class="panel-heading">
 	                	<h4>
@@ -25,7 +25,19 @@
 	                	</p>
 	                </div>
 	            </div>
-	        @endforeach
+	        @empty
+	        	@if($showMyPosts)
+	        		<p>
+	        			You have not created any posts yet. 
+	        			You can 
+	        			<a href="{{ route('posts.create') }}">create a new post</a> 
+	        			or 
+	        			<a href="{{ route('posts.index') }}">view all posts.</a>
+	        		</p>
+	        	@else
+	        		<p>No posts have been created yet. Please check later.</p>
+	        	@endif
+	        @endforelse
         </div>
     </div>
 </div>
