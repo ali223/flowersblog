@@ -1,20 +1,20 @@
 # Flowers Blog - Installation Guide
 
-* Merge the pull request, to merge feature/blog branch with master branch.
+* Clone the repository, as mentioned below:-
 
-* After merging the pull request, you can clone the repository.
-
-  * To clone the repository with HTTPS, use the following command.
+* To clone the repository with HTTPS, use the following command.
 ```
 git clone https://github.com/ali223/flowersblog.git
 ```
 
-  * To clone the repository with SSH, use the following command.
+* To clone the repository with SSH, use the following command.
 ```
 git clone git@github.com:ali223/flowersblog.git
 ```
 
 * After cloning the repository, run `cd flowersblog`
+
+* Then run `git merge feature/blog` to merge the feature/blog branch with master branch.
 
 * Then run `composer install`
 
