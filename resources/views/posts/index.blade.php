@@ -6,7 +6,7 @@
         <div class="col-md-10 col-md-offset-1">
             @include('layouts.status')
 	        @forelse($posts as $post)
-	            <div class="panel panel-default">
+	            <div class="panel panel-info">
 	                <div class="panel-heading">
 	                	<h4>
 	                		<a href="{{ route('posts.show', $post) }}">
