@@ -12,7 +12,7 @@
 
             <!-- Branding Image -->
             <a class="navbar-brand" href="{{ url('/') }}">
-                Flowers Blog
+                Inspirational Blog
             </a>
         </div>
 
