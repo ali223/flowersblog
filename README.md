@@ -1,4 +1,4 @@
-# Flowers Blog - Installation Guide
+# Inspirational Blog - Installation Guide
 
 * Clone the repository, as mentioned below:-
 
