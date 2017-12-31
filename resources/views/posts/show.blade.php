@@ -8,6 +8,9 @@
             @include('layouts.status')
             <div class="panel panel-success">
                 <div class="panel-heading">
+                    @if ($post->image_path)
+                        <img src="{{ asset('storage/' . $post->image_path) }}">
+                    @endif
                 	<h4>
                 		{{ $post->title }}
                 	</h4>             	

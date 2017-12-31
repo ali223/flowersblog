@@ -8,6 +8,9 @@
 	        @forelse($posts as $post)
 	            <div class="panel panel-info">
 	                <div class="panel-heading">
+						@if ($post->image_path)
+							<img width="100" src="{{ asset('storage/' . $post->image_path) }}">
+						@endif
 	                	<h4>
 	                		<a href="{{ route('posts.show', $post) }}">
 	                			{{ $post->title }}

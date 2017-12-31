@@ -11,7 +11,7 @@
                         Edit Post
                     </div>
                     <div class="panel-body">
-                        <form method="POST" action="{{ route('posts.update', $post) }}">
+                        <form method="POST" action="{{ route('posts.update', $post) }}" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             {{ method_field('PATCH') }}
                             <div class="form-group">
@@ -25,6 +25,16 @@
                                     old('content', $post->content)
                                 }}</textarea>
                             </div>  
+                            @if ($post->image_path)
+                            <div class="form-group">
+                                Uploaded Image:
+                                <img width="50" src="{{ asset('storage/'. $post->image_path) }}" >
+                            </div>
+                            @endif
+                            <div class="form-group">
+                                <label for="image_file">Upload New Image:</label>
+                                <input type="file" id="image_file" name="image_file" class="form-control">
+                            </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary">Update</button>
                             </div>

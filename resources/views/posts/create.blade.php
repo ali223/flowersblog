@@ -11,7 +11,7 @@
                         Create Post
                     </div>
                     <div class="panel-body">
-                        <form method="POST" action="{{ route('posts.store') }}">
+                        <form method="POST" action="{{ route('posts.store') }}" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <div class="form-group">
                                 <label for="title">Title:</label>
@@ -25,6 +25,10 @@
                                     old('content') 
                                 }}</textarea>
                             </div>  
+                            <div class="form-group">
+                                <label for="image_file">Upload Image:</label>
+                                <input type="file" id="image_file" name="image_file" class="form-control">
+                            </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary">Save</button>
                             </div>

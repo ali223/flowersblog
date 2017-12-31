@@ -54,10 +54,11 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        $post = $request->validate([
-            'title' => 'required|max:180',
-            'content' => 'required'
-        ]);        
+        $post = $this->validatePost($request);
+
+        $path = $this->storeUploadedFile($request, 'image_file');
+
+        $post['image_path'] = $path ?? null;
 
         auth()->user()->posts()->create($post);
 
@@ -103,10 +104,11 @@ class PostsController extends Controller
     {
         $this->authorize('update', $post);
 
-        $updatedPost = $request->validate([
-            'title' => 'required|max:180',
-            'content' => 'required'
-        ]);        
+        $updatedPost = $this->validatePost($request);
+
+        $path = $this->storeUploadedFile($request, 'image_file');
+
+        $updatedPost['image_path'] = $path ?? $post->image_path;
 
         $post->update($updatedPost);
 
@@ -131,4 +133,23 @@ class PostsController extends Controller
             ->route('posts.index', ['myposts' => 1])
             ->with('status', 'Post Deleted');
     }
+
+    private function validatePost(Request $request)
+    {
+        return $request->validate([
+            'title' => 'required|max:180',
+            'content' => 'required',
+            'image_file' => 'nullable|image'
+        ]);
+    }
+
+    private function storeUploadedFile(Request $request, $file, $dir = 'images')
+    {
+        if ($request->hasFile($file)) {
+            $path = $request->file($file)->store($dir);
+        }
+
+        return $path ?? null;
+    }
+
 }
