@@ -2,8 +2,9 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
+use App\Role;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
@@ -30,5 +31,21 @@ class User extends Authenticatable
     public function posts()
     {
         return $this->hasMany(Post::class);
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function hasPermission($permission)
+    {
+        foreach ($this->roles as $role) {
+            if (isset($role->permissions[$permission])) {
+                return $role->permissions[$permission];
+            }
+        }
+
+        return false;
     }
 }
