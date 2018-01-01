@@ -24,4 +24,31 @@ class Post extends Model
     {
     	return $this->hasMany(Comment::class);
     }
+
+    public function scopePublished($query)
+    {
+        return $query->where('published', true);
+    }
+
+    public function scopeUnpublished($query)
+    {
+        return $query->where('published', false);
+    }
+
+    public function scopeCreatedBy($query, $userId)
+    {
+        return $query->orWhere('user_id', $userId);
+    }
+
+    public function isUnpublished()
+    {
+        return ! $this->published;
+    }
+
+    public function isPublished()
+    {
+        return $this->published;
+    }
+
+
 }
