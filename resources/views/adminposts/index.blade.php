@@ -12,12 +12,14 @@
 							<img width="100" src="{{ asset('storage/' . $post->image_path) }}">
 						@endif
 	                	<h4>
-	                		<a href="{{ route('posts.show', $post) }}">
-	                			{{ $post->title }}
+	                		<a href="{{ route('adminposts.show', $post) }}">
+	                			{{ $post->title }}	                			
 	                		</a>
-							@if ($showMyPosts && $post->isUnpublished())
-								<span class="label label-danger">Unpublished</span>
-							@endif
+	                		@if ($post->isUnpublished())
+	                			<span class="label label-danger">Unpublished</span>
+	                		@else
+	                			<span class="label label-success">Published</span>
+	                		@endif
 	                	</h4>             	
 	                	<strong>Created by: </strong>
 	                	{{ $post->user->name }} on 
@@ -32,17 +34,7 @@
 	                </div>
 	            </div>
 	        @empty
-				@if($showMyPosts)
-	        		<p>
-	        			You have not created any posts yet. 
-	        			You can 
-	        			<a href="{{ route('posts.create') }}">create a new post</a> 
-	        			or 
-	        			<a href="{{ route('posts.index') }}">view all posts.</a>
-	        		</p>
-	        	@else
-	        		<p>No posts have been created yet. Please check later.</p>
-	        	@endif
+	        	<p>No posts found. Please check later.</p>	
 	        @endforelse
         </div>
     </div>

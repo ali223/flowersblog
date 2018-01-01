@@ -1,12 +1,18 @@
 <?php
 
+use App\Role;
 use Faker\Generator as Faker;
 
 $factory->define(App\Comment::class, function (Faker $faker) {
     return [
         'text' => $faker->sentence,
         'user_id' => function () {
-        	return factory(App\User::class)->create()->id;
+        	$user = factory(App\User::class)->create();
+        	$user->roles()
+        		->save(
+        			Role::where('name', 'member')->first()
+        		);
+        	return $user->id;
         }
     ];
 });

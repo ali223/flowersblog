@@ -2,14 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostRequest;
 use App\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class PostsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['index', 'show']]);
+        
+        $this->middleware('redirect-admin', [
+                'only' => ['index', 'show']
+            ]);
+
+        $this->middleware('can:access-member-area', [
+                'except' => ['index', 'show']
+            ]);
     }
 
     /**
@@ -19,12 +28,14 @@ class PostsController extends Controller
      */
     public function index(Request $request)
     {
-        $posts = Post::with('user')->latest();
+        $posts = Post::with('user')
+                    ->published()
+                    ->latest();
 
         $showMyPosts = 0;
 
         if (auth()->check() && $request->myposts) {
-            $posts->where('user_id', auth()->id());
+            $posts->createdBy(auth()->id());
             $showMyPosts = 1;
         }
 
@@ -52,9 +63,9 @@ class PostsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
-        $post = $this->validatePost($request);
+        $post = $request->only('title', 'content', 'image_file');
 
         $path = $this->storeUploadedFile($request, 'image_file');
 
@@ -73,9 +84,17 @@ class PostsController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show($id)
     {
-        $post->load(['user', 'comments.user']);
+        $post = Post::with(['user', 'comments.user']);
+
+        if( auth()->check()) {
+            $post->byUserAndAllPublished(auth()->id());
+        } else {
+            $post->published();
+        }
+
+        $post = $post->findOrFail($id);
         
         return view('posts.show', compact('post'));
     }
@@ -100,11 +119,11 @@ class PostsController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(PostRequest $request, Post $post)
     {
         $this->authorize('update', $post);
 
-        $updatedPost = $this->validatePost($request);
+        $updatedPost = $request->only('title', 'content', 'image_file');
 
         $path = $this->storeUploadedFile($request, 'image_file');
 
@@ -132,15 +151,6 @@ class PostsController extends Controller
         return redirect()
             ->route('posts.index', ['myposts' => 1])
             ->with('status', 'Post Deleted');
-    }
-
-    private function validatePost(Request $request)
-    {
-        return $request->validate([
-            'title' => 'required|max:180',
-            'content' => 'required',
-            'image_file' => 'nullable|image'
-        ]);
     }
 
     private function storeUploadedFile(Request $request, $file, $dir = 'images')

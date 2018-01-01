@@ -28,7 +28,14 @@ class Post extends Model
     public function scopePublished($query)
     {
         return $query->where('published', true);
+    }   
+    
+    public function scopeByUserAndAllPublished($query, $userId)
+    {
+        return $query->where('published', true)
+                    ->orWhere('user_id', $userId);
     }
+ 
 
     public function scopeUnpublished($query)
     {

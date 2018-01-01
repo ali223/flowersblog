@@ -15,6 +15,8 @@
                 		{{ $post->title }}
                         @if ($post->isUnpublished())
                             <span class="label label-danger">Unpublished</span>
+                        @else
+                            <span class="label label-success">Published</span>
                         @endif
                 	</h4>
                     <p>
@@ -25,16 +27,34 @@
                     	</em>
                     </p>
                     @can('update', $post)
-                            <a class="btn btn-sm btn-primary" href="{{ route('posts.edit', $post) }}">Edit</a> 
+                            <a class="btn btn-sm btn-primary" href="{{ route('adminposts.edit', $post) }}">Edit</a> 
                     @endcan
                     @can('delete', $post)
-                    		<form style="display:inline" method="POST" action="{{ route('posts.destroy', $post) }}">
+                    		<form style="display:inline" method="POST" action="{{ route('adminposts.destroy', $post) }}">
                     			{{ csrf_field() }}
                     			{{ method_field('DELETE') }}
                             	<button type="submit" class="btn btn-sm btn-danger">Delete</button>
                             </form>
-
                     @endcan
+                    @can('publish', App\Post::class)
+                        @if ($post->isUnpublished())
+                            <form style="display:inline" method="POST" action="{{ route('adminposts.publish', $post) }}">
+                                {{ csrf_field() }}
+                                {{ method_field('PATCH') }}
+                                <button type="submit" class="btn btn-sm btn-success">Publish</button>
+                            </form>
+                        @endif
+                    @endcan
+                    @can('unpublish', App\Post::class)
+                        @if ($post->isPublished())
+                            <form style="display:inline" method="POST" action="{{ route('adminposts.unpublish', $post) }}">
+                                {{ csrf_field() }}
+                                {{ method_field('PATCH') }}
+                                <button type="submit" class="btn btn-sm btn-warning">Unpublish</button>
+                            </form>
+                        @endif
+                    @endcan
+
 
                 </div>
                 <div class="panel-body">

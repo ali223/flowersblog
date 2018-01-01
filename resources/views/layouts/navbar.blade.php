@@ -11,19 +11,34 @@
             </button>
 
             <!-- Branding Image -->
-            <a class="navbar-brand" href="{{ url('/') }}">
-                Inspirational Blog
-            </a>
+            @admin
+                <a class="navbar-brand" href="{{ route('adminposts.index') }}">
+                    Inspirational Blog
+                    <span class="badge">Admin Area</span>
+                </a>
+            @else
+                <a class="navbar-brand" href="{{ url('/') }}">
+                    Inspirational Blog
+                </a>
+            @endadmin
         </div>
 
         <div class="collapse navbar-collapse" id="app-navbar-collapse">
             <!-- Left Side Of Navbar -->
             <ul class="nav navbar-nav">
-                <li><a href="{{ route('posts.index') }}">All Posts</a></li>
-                @auth
+                @guest
+                    <li><a href="{{ route('posts.index') }}">All Posts</a></li>
+                @endguest
+                @member
+                    <li><a href="{{ route('posts.index') }}">All Posts</a></li>
                     <li><a href="{{ route('posts.index', ['myposts' => 1]) }}">My Posts</a></li>
                     <li><a href="{{ route('posts.create') }}">Create Post</a></li>
-                @endauth
+                @endmember
+                @admin
+                    <li><a href="{{ route('adminposts.index') }}">All Posts</a></li>
+                    <li><a href="{{ route('adminposts.index', ['published' => 0]) }}">Unpublished Posts</a></li>
+                    <li><a href="{{ route('adminposts.index', ['published' => 1]) }}">Published Posts</a></li>
+                @endadmin
             </ul>
 
             <!-- Right Side Of Navbar -->

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
@@ -20,6 +21,20 @@ class AppServiceProvider extends ServiceProvider
         }
 
         Schema::defaultStringLength(191);
+
+        Blade::if('admin', function () {
+            if (auth()->check() && auth()->user()->hasPermission('access-admin-panel')) {
+                return true;
+            }
+            return false;
+        });
+
+        Blade::if('member', function () {
+            if (auth()->check() && auth()->user()->hasPermission('access-member-area')) {
+                return true;
+            }
+            return false;            
+        });
     }
 
     /**
