@@ -25,12 +25,10 @@
                                     old('content', $post->content)
                                 }}</textarea>
                             </div>  
-                            @if ($post->image_path)
                             <div class="form-group">
                                 Uploaded Image:
-                                <img width="50" src="{{ asset('storage/'. $post->image_path) }}" >
+                                @include('layouts.postimage', ['width' => 50])
                             </div>
-                            @endif
                             <div class="form-group">
                                 <label for="image_file">Upload New Image:</label>
                                 <input type="file" id="image_file" name="image_file" class="form-control">

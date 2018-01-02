@@ -8,9 +8,7 @@
             @include('layouts.status')
             <div class="panel panel-success">
                 <div class="panel-heading">
-                    @if ($post->image_path)
-                        <img src="{{ asset('storage/' . $post->image_path) }}">
-                    @endif
+					@include('layouts.postimage', ['width' => 400])
                 	<h4>
                 		{{ $post->title }}
                         @if ($post->isUnpublished())

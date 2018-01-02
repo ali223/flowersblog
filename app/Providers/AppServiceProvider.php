@@ -35,6 +35,16 @@ class AppServiceProvider extends ServiceProvider
             }
             return false;            
         });
+
+        Blade::if('public', function () {
+            return config('filesystems.default') == 'public';
+        });
+
+        Blade::if('dropbox', function () {
+            return config('filesystems.default') == 'dropbox';
+        });
+
+
     }
 
     /**
