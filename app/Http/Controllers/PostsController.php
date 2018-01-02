@@ -11,10 +11,7 @@ class PostsController extends Controller
 {
     public function __construct()
     {
-        
-        $this->middleware('redirect-admin', [
-                'only' => ['index', 'show']
-            ]);
+        $this->middleware('redirect-admin');
 
         $this->middleware('can:access-member-area', [
                 'except' => ['index', 'show']
