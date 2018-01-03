@@ -44,7 +44,7 @@ class Post extends Model
 
     public function scopeCreatedBy($query, $userId)
     {
-        return $query->orWhere('user_id', $userId);
+        return $query->where('user_id', $userId);
     }
 
     public function isUnpublished()

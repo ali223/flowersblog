@@ -26,7 +26,6 @@ class PostsController extends Controller
     public function index(Request $request)
     {
         $posts = Post::with('user')
-                    ->published()
                     ->latest();
 
         $showMyPosts = 0;
@@ -34,6 +33,8 @@ class PostsController extends Controller
         if (auth()->check() && $request->myposts) {
             $posts->createdBy(auth()->id());
             $showMyPosts = 1;
+        } else {
+            $posts->published();
         }
 
         $posts = $posts->get();
