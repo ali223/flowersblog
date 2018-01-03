@@ -11,6 +11,8 @@
     <title>Inspirational Blog</title>
 
     <!-- Styles -->
+    <link rel="stylesheet" 
+    		href="https://fonts.googleapis.com/css?family=Tangerine|Kaushan+Script">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>

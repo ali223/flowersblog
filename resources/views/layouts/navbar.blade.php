@@ -13,12 +13,12 @@
             <!-- Branding Image -->
             @admin
                 <a class="navbar-brand" href="{{ route('adminposts.index') }}">
-                    Inspirational Blog
+                    <span class="inspirational-brand">Inspirational</span> Blog
                     <span class="badge">Admin Area</span>
                 </a>
             @else
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    Inspirational Blog
+                    <span class="inspirational-brand">Inspirational</span> Blog
                 </a>
             @endadmin
         </div>
