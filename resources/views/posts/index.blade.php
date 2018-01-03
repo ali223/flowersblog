@@ -1,7 +1,9 @@
 @extends('layouts.master')
 
 @section('content')
-@include('layouts.showcase')
+@if (!$showMyPosts)
+	@include('layouts.showcase')
+@endif
 <div class="container posts-container">
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
